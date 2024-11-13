@@ -1,47 +1,60 @@
 var titulo = document.querySelector(".titulo");
-titulo.textContent = "Samuel Nutrição";
-
+titulo.textContent = "Samuel nutrição";
 var pacientes = document.querySelectorAll(".paciente");
-console.log(pacientes);
 
-for(var i = 0; i < 5; i++) {
+for (var i = 0; i < 5; i++){
   console.log(pacientes[i]);
-  
-  var tdPeso = pacientes[i].querySelector(".info-peso");
-var peso = tdPeso.textContent;
 
-var tdAltura = pacientes[i].querySelector(".info-altura");
-var altura = tdAltura.textContent;
+  var tdPeso = pacientes[i].querySelector('.info-peso');
+  var peso = tdPeso.textContent;
 
-var tdImc = pacientes[i].querySelector(".info-imc");
+  var tdAltura = pacientes[i].querySelector('.info-altura');
+  var altura = tdAltura.textContent;
 
-var pesoEhValido = true;
-var alturaEhValida = true; 
+  var tdIMC = pacientes[i].querySelector('.info-imc');
 
-tdImc.textContent = imc;
+  var pesoEnValido = validaPeso(peso);
+  var alturaEnValida = validaAltura(altura);
 
-if (peso < 0 || peso > 600){
-  tdImc.textContent = "peso inválido";
-  pesoEhValido = false;
-  pacientes[i].classList.add("dados-invalidos");
-}
-
-if (altura < 0 || altura > 2.00){
-  tdImc.textcontent = "altura inválida"
-  alturaEhValida = false;
+  if(peso <= 0 || peso >= 600){
+    tdIMC.textContent = "Peso inválido ";
+    pesoEnValido = false;
     pacientes[i].classList.add("dados-invalidos");
+
+  }
+
+  if(altura <= 0 || altura > 2.80){
+    tdIMC.textContent = "Altura inválido ";
+    alturaEnValida = false;
+    pacientes[i].classList.add("dados-invalidos");
+  }
+
+  if (pesoEnValido && alturaEnValida){
+    var imc = calculaImc(peso, altura);
+    tdIMC.textContent = imc;
+  }
 }
 
-if(pesoEhValido && alturaEhValida){
-  var imc = peso / (altura * altura);
-  tdImc.textContent = imc.toFixed(2);
- }
-}
-
-function calculaImc(peso, altura ){
+function calculaImc(peso, altura) {
   var imc = 0;
-  
-  imc = peso/ (altura*altura);
-  
-  return imc;
+
+  imc = peso / (altura*altura);
+
+  return imc.toFixed(2);
+}
+
+function validaPeso(peso) {
+  if(peso > 0 && peso < 600 ){
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function validaAltura(altura) {
+  if(altura > 0 && altura < 2.80 ){
+    return true;
+  } else {
+    return false;
+  }
 }
